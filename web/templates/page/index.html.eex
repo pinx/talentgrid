@@ -1,1 +1,2 @@
+<%= render "facebook.html" %>
 <div id="elm-main"/>

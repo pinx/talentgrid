@@ -17,9 +17,22 @@ import "phoenix_html"
 //
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
+import { Auth } from "web/static/js/auth"
 
 // import socket from "./socket"
 //
-var elmDiv = document.getElementById('elm-main')
-  , elmApp = Elm.embed(Elm.TalentGrid, elmDiv);
+let userAuth = Auth.getInitialAuth();
 
+var elmDiv = document.getElementById('elm-main')
+  , elmApp = Elm.embed(Elm.TalentGrid, elmDiv, { facebookLogin: userAuth });
+
+Auth.init(elmApp);
+
+
+if (!userAuth.authenticated) {
+  Auth.showFacebookLogin();
+}
+
+if (userAuth.authenticated) {
+  elmApp.ports.login.send(userAuth);
+}
