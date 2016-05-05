@@ -31,14 +31,14 @@ update action model =
   let a = Debug.log "update" action
   in
       case action of
-        FacebookAuth fbAuth -> 
+        FacebookAuth fbAuth ->
           ({ model | facebookAuth = fbAuth }, loginWithFacebook fbAuth)
 
-        Login user -> -- result -> 
-          -- let 
-          --     user = Result.withDefault Auth.initialUser result
-          -- in
-              ({ model | user = user }, initialLoadEffects user)
+        Login result -> -- result ->
+          let
+            user = Result.withDefault Auth.initialUser result
+          in
+            ({ model | user = user }, initialLoadEffects user)
 
 
 -- Effects
@@ -46,13 +46,10 @@ update action model =
 -- We expect a new or existing user
 loginWithFacebook : Auth.FacebookAuth -> Effects Action
 loginWithFacebook fbAuth =
-  let a = Debug.log "loginWithFacebook" fbAuth
-      requestTask = Http.get Auth.userDecoder (Auth.loginWithFacebookUrl fbAuth)
-      -- record = taskToRecord requestTask
-      -- b = Debug.log "record" record
-  in
-      Task.map Login requestTask
-      |> Effects.task
+  Http.get Auth.userDecoder (Auth.loginWithFacebookUrl fbAuth)
+    |> Task.toResult
+    |> Task.map Login
+    |> Effects.task
 
 
 -- taskToRecord : Task x a -> Maybe a
@@ -65,4 +62,3 @@ loginWithFacebook fbAuth =
 --           errorMessage = Debug.log "resultToRecord error" error
 --       in
 --          Nothing
-
