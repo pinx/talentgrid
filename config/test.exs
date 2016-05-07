@@ -7,7 +7,7 @@ config :talentgrid, Talentgrid.Endpoint,
   server: false
 
 # Print only warnings and errors during test
-config :logger, level: :warn
+config :logger, level: :debug #:warn
 
 # Configure your database
 config :talentgrid, Talentgrid.Repo,

@@ -11,6 +11,7 @@ defmodule Talentgrid.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+
   end
 
   scope "/", Talentgrid do
@@ -20,7 +21,10 @@ defmodule Talentgrid.Router do
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Talentgrid do
-  #   pipe_through :api
-  # end
+  scope "/api", Talentgrid do
+    pipe_through :api
+
+    resources "/sessions", SessionController, only: [:create, :delete]
+    resources "/users", UserController, except: [:new, :edit]
+  end
 end
