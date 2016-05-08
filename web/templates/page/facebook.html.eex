@@ -1,24 +1,11 @@
-<script>
-  window.fbAsyncInit = function() {
-    FB.init({
-      appId      : '1261741277187499',
-      xfbml      : true,
-      version    : 'v2.6'
-    });
-  };
-
-  (function(d, s, id){
-     var js, fjs = d.getElementsByTagName(s)[0];
-     if (d.getElementById(id)) {return;}
-     js = d.createElement(s); js.id = id;
-     js.src = "//connect.facebook.net/en_US/sdk.js";
-     fjs.parentNode.insertBefore(js, fjs);
-   }(document, 'script', 'facebook-jssdk'));
-</script>
-<div id="fblogin" style="display:none" class="container">
-  <div class="clear col-12 mt1">
-    <fb:login-button scope="public_profile,email" onlogin="window.checkLoginState();">
-    </fb:login-button>
-  </div>
-</div>
-
+<%= if @current_user do %>
+    <h2>Welcome, <%= @current_user.name %>!</h2>
+    <img src="<%= @current_user.avatar %>" class="img-circle"/>
+    <%= link "Logout", to: auth_path(@conn, :delete), method: :delete, class: "btn btn-danger" %>
+    <br>
+  <% else %>
+    <a class="btn btn-primary btn-lg" href="/auth/facebook?scope=email,public_profile">
+      <i class="fa fa-facebook"></i>
+      Sign in with Facebook
+    </a>
+<% end %>

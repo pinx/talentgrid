@@ -46,7 +46,7 @@ update action model =
 -- We expect a new or existing user
 loginWithFacebook : Auth.FacebookAuth -> Effects Action
 loginWithFacebook fbAuth =
-  Http.post Auth.userDecoder (Auth.loginWithFacebookUrl fbAuth) Http.empty
+  Http.get Auth.userDecoder (Auth.loginWithFacebookUrl fbAuth)
   |> Task.toResult
   |> Task.map Login
   |> Effects.task

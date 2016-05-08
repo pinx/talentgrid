@@ -1,2 +1,2 @@
-<%= render "facebook.html" %>
+<%= render "facebook.html", conn: @conn, current_user: @current_user %>
 <div id="elm-main"/>

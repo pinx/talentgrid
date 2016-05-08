@@ -35,7 +35,7 @@ initialFacebookAuth =
 
 loginWithFacebookUrl : FacebookAuth -> String
 loginWithFacebookUrl fbAuth =
-  Http.url "http://localhost:4000/api/sessions/" (authParams fbAuth)
+  Http.url "http://localhost:4000/auth/facebook" (authParams fbAuth)
 
 authParams : FacebookAuth -> List (String, String)
 authParams fbAuth =

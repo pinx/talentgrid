@@ -11890,7 +11890,7 @@ Elm.TalentGrid.Auth.Model.make = function (_elm) {
                      ,{ctor: "_Tuple2",_0: "email",_1: fbAuth.email}
                      ,{ctor: "_Tuple2",_0: "facebook_token",_1: fbAuth.facebook_token}]);
    };
-   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/api/sessions/",authParams(fbAuth));};
+   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/auth/facebook",authParams(fbAuth));};
    var initialFacebookAuth = {id: "",name: "",email: "",timezone: 0,facebook_token: ""};
    var initialUser = {email: "",token: "",authenticated: false};
    var FacebookAuth = F5(function (a,b,c,d,e) {    return {id: a,name: b,email: c,timezone: d,facebook_token: e};});
@@ -11976,7 +11976,7 @@ Elm.TalentGrid.Update.make = function (_elm) {
    var loginWithFacebook = function (fbAuth) {
       return $Effects.task(A2($Task.map,
       $TalentGrid$Action.Login,
-      $Task.toResult(A3($Http.post,$TalentGrid$Auth$Model.userDecoder,$TalentGrid$Auth$Model.loginWithFacebookUrl(fbAuth),$Http.empty))));
+      $Task.toResult(A2($Http.get,$TalentGrid$Auth$Model.userDecoder,$TalentGrid$Auth$Model.loginWithFacebookUrl(fbAuth)))));
    };
    var init = {ctor: "_Tuple2",_0: $TalentGrid$Model.initialModel,_1: $Effects.none};
    var initialLoadEffects = function (user) {    return user.authenticated ? $Effects.none : $Effects.none;};

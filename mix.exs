@@ -18,8 +18,18 @@ defmodule Talentgrid.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Talentgrid, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex]]
+     applications: [
+      :phoenix,
+      :postgrex,
+      :phoenix_ecto,
+      :phoenix_html,
+      :ueberauth,
+      :ueberauth_facebook,
+      # :facebook,
+      :cowboy,
+      :logger,
+      :gettext]
+    ]
   end
 
   # Specifies which paths to compile per environment.
@@ -34,6 +44,9 @@ defmodule Talentgrid.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_ecto, "~> 2.0"},
      {:phoenix_html, "~> 2.4"},
+     {:ueberauth, "~> 0.2"},
+     {:ueberauth_facebook, "~> 0.3"},
+     {:facebook, "~> 0.8.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:gettext, "~> 0.9"},

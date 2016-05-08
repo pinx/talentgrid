@@ -4,9 +4,12 @@ defmodule Talentgrid.SessionControllerTest do
   require Logger
 
   alias Talentgrid.User
-  @valid_attrs %{authentication_token: "some content",
+  @valid_attrs %{
+    id: 1234,
+    authentication_token: "some content",
     email: "test@test.com",
-    facebook_token: "<a-facebook-token>"}
+    facebook_token: "<a-facebook-token>"
+  }
   @invalid_attrs %{}
 
   @session_opts [
