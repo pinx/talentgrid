@@ -20,6 +20,7 @@ defmodule Talentgrid.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/likes", LikeController, except: [:new, :edit]
   end
 
   # Other scopes may use custom stacks.
@@ -28,6 +29,7 @@ defmodule Talentgrid.Router do
 
     resources "/sessions", SessionController, only: [:create, :delete]
     resources "/users", UserController, except: [:new, :edit]
+    resources "/likes", LikeController, except: [:new, :edit]
   end
 
 

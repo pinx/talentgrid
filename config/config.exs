@@ -22,7 +22,7 @@ config :logger, :console,
 # Configure authentication
 config :ueberauth, Ueberauth,
   providers: [
-    facebook: { Ueberauth.Strategy.Facebook, [] }
+    facebook: { Ueberauth.Strategy.Facebook, [profile_fields: "name,email"] }
   ]
 
 config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,

@@ -46,12 +46,7 @@ defmodule Talentgrid.AuthController do
 
 
   defp get_or_create_user(user) do
-    db_user =
-      if !is_nil(user.email) do
-        Repo.get_by(User, email: user.email)
-      else
-        Repo.get_by(User, facebook_uid: user.facebook_uid)
-      end
+    db_user = Repo.get_by(User, id: user.id)
     case db_user do
       nil -> create_user(user)
       usr -> usr

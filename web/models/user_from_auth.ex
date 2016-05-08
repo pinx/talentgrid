@@ -22,7 +22,12 @@ defmodule UserFromAuth do
 
   defp basic_info(auth) do
     Logger.warn(inspect auth)
-    %{facebook_uid: auth.uid, email: auth.info.email, name: name_from_auth(auth), avatar: auth.info.image}
+    %{
+      id: auth.uid,
+      email: auth.info.email,
+      name: name_from_auth(auth),
+      facebook_token: auth.credentials.token,
+      avatar: auth.info.image}
   end
 
   defp name_from_auth(auth) do

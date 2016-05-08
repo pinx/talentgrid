@@ -2,7 +2,7 @@ defmodule Talentgrid.UserControllerTest do
   use Talentgrid.ConnCase
 
   alias Talentgrid.User
-  @valid_attrs %{authentication_token: "some content", current_sign_in_at: "2010-04-17 14:00:00", current_sign_in_ip: "some content", email: "some content", facebook_token: "some content", last_sign_in_at: "2010-04-17 14:00:00", last_sign_in_ip: "some content", name: "some content"}
+  @valid_attrs %{id: 1234, authentication_token: "some content", current_sign_in_at: "2010-04-17 14:00:00", current_sign_in_ip: "some content", email: "some content", facebook_token: "some content", last_sign_in_at: "2010-04-17 14:00:00", last_sign_in_ip: "some content", name: "some content"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -15,7 +15,7 @@ defmodule Talentgrid.UserControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! %User{id: 1234}
     conn = get conn, user_path(conn, :show, user)
     assert json_response(conn, 200)["data"] == %{"id" => user.id,
       "email" => user.email,
@@ -46,20 +46,20 @@ defmodule Talentgrid.UserControllerTest do
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! %User{id: 1234}
     conn = put conn, user_path(conn, :update, user), user: @valid_attrs
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(User, @valid_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! %User{id: 1234}
     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   test "deletes chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+    user = Repo.insert! %User{id: 1234}
     conn = delete conn, user_path(conn, :delete, user)
     assert response(conn, 204)
     refute Repo.get(User, user.id)

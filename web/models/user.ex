@@ -1,11 +1,12 @@
 defmodule Talentgrid.User do
   use Talentgrid.Web, :model
 
+  @primary_key {:id, :id, autogenerate: false}
+
   schema "users" do
     field :email, :string
     field :name, :string
     field :authentication_token, :string
-    field :facebook_uid, :string
     field :avatar, :string
     field :facebook_token, :string
     field :current_sign_in_at, Ecto.DateTime
@@ -16,7 +17,7 @@ defmodule Talentgrid.User do
     timestamps
   end
 
-  @required_fields ~w(name facebook_uid )
+  @required_fields ~w(name id )
   @optional_fields ~w(facebook_token email avatar authentication_token )
 
   @doc """
