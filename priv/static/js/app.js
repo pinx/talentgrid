@@ -11888,15 +11888,15 @@ Elm.TalentGrid.Auth.Model.make = function (_elm) {
    var authParams = function (fbAuth) {
       return _U.list([{ctor: "_Tuple2",_0: "id",_1: fbAuth.id}
                      ,{ctor: "_Tuple2",_0: "email",_1: fbAuth.email}
-                     ,{ctor: "_Tuple2",_0: "facebookAccessToken",_1: fbAuth.facebookAccessToken}]);
+                     ,{ctor: "_Tuple2",_0: "facebook_token",_1: fbAuth.facebook_token}]);
    };
-   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/auth/facebook",authParams(fbAuth));};
-   var initialFacebookAuth = {id: "",name: "",email: "",timezone: 0,facebookAccessToken: ""};
+   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/api/sessions/",authParams(fbAuth));};
+   var initialFacebookAuth = {id: "",name: "",email: "",timezone: 0,facebook_token: ""};
    var initialUser = {email: "",token: "",authenticated: false};
-   var FacebookAuth = F5(function (a,b,c,d,e) {    return {id: a,name: b,email: c,timezone: d,facebookAccessToken: e};});
+   var FacebookAuth = F5(function (a,b,c,d,e) {    return {id: a,name: b,email: c,timezone: d,facebook_token: e};});
    var User = F3(function (a,b,c) {    return {email: a,token: b,authenticated: c};});
    var userDecoder = A2($Json$Decode.at,
-   _U.list(["user"]),
+   _U.list(["data"]),
    A4($Json$Decode.object3,
    User,
    A2($Json$Decode._op[":="],"email",$Json$Decode.string),
@@ -11976,7 +11976,7 @@ Elm.TalentGrid.Update.make = function (_elm) {
    var loginWithFacebook = function (fbAuth) {
       return $Effects.task(A2($Task.map,
       $TalentGrid$Action.Login,
-      $Task.toResult(A2($Http.get,$TalentGrid$Auth$Model.userDecoder,$TalentGrid$Auth$Model.loginWithFacebookUrl(fbAuth)))));
+      $Task.toResult(A3($Http.post,$TalentGrid$Auth$Model.userDecoder,$TalentGrid$Auth$Model.loginWithFacebookUrl(fbAuth),$Http.empty))));
    };
    var init = {ctor: "_Tuple2",_0: $TalentGrid$Model.initialModel,_1: $Effects.none};
    var initialLoadEffects = function (user) {    return user.authenticated ? $Effects.none : $Effects.none;};
@@ -12041,17 +12041,17 @@ Elm.TalentGrid.make = function (_elm) {
    var facebookLogin = Elm.Native.Port.make(_elm).inboundSignal("facebookLogin",
    "TalentGrid.Auth.Model.FacebookAuth",
    function (v) {
-      return typeof v === "object" && "id" in v && "name" in v && "email" in v && "timezone" in v && "facebookAccessToken" in v ? {_: {}
-                                                                                                                                  ,id: typeof v.id === "string" || typeof v.id === "object" && v.id instanceof String ? v.id : _U.badPort("a string",
-                                                                                                                                  v.id)
-                                                                                                                                  ,name: typeof v.name === "string" || typeof v.name === "object" && v.name instanceof String ? v.name : _U.badPort("a string",
-                                                                                                                                  v.name)
-                                                                                                                                  ,email: typeof v.email === "string" || typeof v.email === "object" && v.email instanceof String ? v.email : _U.badPort("a string",
-                                                                                                                                  v.email)
-                                                                                                                                  ,timezone: typeof v.timezone === "number" && isFinite(v.timezone) && Math.floor(v.timezone) === v.timezone ? v.timezone : _U.badPort("an integer",
-                                                                                                                                  v.timezone)
-                                                                                                                                  ,facebookAccessToken: typeof v.facebookAccessToken === "string" || typeof v.facebookAccessToken === "object" && v.facebookAccessToken instanceof String ? v.facebookAccessToken : _U.badPort("a string",
-                                                                                                                                  v.facebookAccessToken)} : _U.badPort("an object with fields `id`, `name`, `email`, `timezone`, `facebookAccessToken`",
+      return typeof v === "object" && "id" in v && "name" in v && "email" in v && "timezone" in v && "facebook_token" in v ? {_: {}
+                                                                                                                             ,id: typeof v.id === "string" || typeof v.id === "object" && v.id instanceof String ? v.id : _U.badPort("a string",
+                                                                                                                             v.id)
+                                                                                                                             ,name: typeof v.name === "string" || typeof v.name === "object" && v.name instanceof String ? v.name : _U.badPort("a string",
+                                                                                                                             v.name)
+                                                                                                                             ,email: typeof v.email === "string" || typeof v.email === "object" && v.email instanceof String ? v.email : _U.badPort("a string",
+                                                                                                                             v.email)
+                                                                                                                             ,timezone: typeof v.timezone === "number" && isFinite(v.timezone) && Math.floor(v.timezone) === v.timezone ? v.timezone : _U.badPort("an integer",
+                                                                                                                             v.timezone)
+                                                                                                                             ,facebook_token: typeof v.facebook_token === "string" || typeof v.facebook_token === "object" && v.facebook_token instanceof String ? v.facebook_token : _U.badPort("a string",
+                                                                                                                             v.facebook_token)} : _U.badPort("an object with fields `id`, `name`, `email`, `timezone`, `facebook_token`",
       v);
    });
    var loginAction = A2($Signal.map,$TalentGrid$Action.FacebookAuth,A2($Debug.log,"login",facebookLogin));
@@ -12133,7 +12133,7 @@ var Auth = exports.Auth = {
     return storedAuth ? JSON.parse(storedAuth) : this.getDefaultAuth();
   },
   getInitialAuth: function getInitialAuth() {
-    return { id: '', name: '', timezone: 0, email: '', facebookAccessToken: '' };
+    return { id: '', name: '', timezone: 0, email: '', facebook_token: '' };
   },
   setAuth: function setAuth(auth) {
     var oldAuth = this.getAuth();
@@ -12162,14 +12162,14 @@ var Auth = exports.Auth = {
     document.getElementById('fblogin').style.display = 'none';
   },
   handleFacebookResponse: function handleFacebookResponse(fbResponse) {
-    fbResponse.facebookAccessToken = this.facebookAccessToken; // Mutation, but fuck it, my main app is in Elm LOL!
+    fbResponse.facebook_token = this.facebook_token; // Mutation, but fuck it, my main app is in Elm LOL!
     console.log(fbResponse);
     this.elmApp.ports.facebookLogin.send(fbResponse);
   },
   statusChangeCallback: function statusChangeCallback(response) {
     console.log(response);
     if (response.status === 'connected') {
-      this.facebookAccessToken = response.authResponse.accessToken; // Another mutation and also fuck it - see above LOL!
+      this.facebook_token = response.authResponse.accessToken; // Another mutation and also fuck it - see above LOL!
       FB.api('/me?fields=name,email,timezone', this.handleFacebookResponse.bind(this));
     } else if (response.status === 'not_authorized') {
       alert('Facebook login is not authorized');

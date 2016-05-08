@@ -32,7 +32,7 @@ defmodule Talentgrid.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_talentgrid_key",
+    key: "talentgrid",
     signing_salt: "9IjqJFSv"
 
   plug Talentgrid.Router

@@ -14,7 +14,7 @@ type alias FacebookAuth =
   , name : String
   , email : String
   , timezone : Int
-  , facebookAccessToken : String
+  , facebook_token : String
   }
 
 initialUser : User
@@ -30,24 +30,24 @@ initialFacebookAuth =
   , name = ""
   , email = ""
   , timezone = 0
-  , facebookAccessToken = ""
+  , facebook_token = ""
   }
 
 loginWithFacebookUrl : FacebookAuth -> String
 loginWithFacebookUrl fbAuth =
-  Http.url "http://localhost:4000/auth/facebook" (authParams fbAuth)
+  Http.url "http://localhost:4000/api/sessions/" (authParams fbAuth)
 
 authParams : FacebookAuth -> List (String, String)
 authParams fbAuth =
   [ ("id", fbAuth.id)
   , ("email", fbAuth.email)
-  , ("facebookAccessToken", fbAuth.facebookAccessToken)
+  , ("facebook_token", fbAuth.facebook_token)
   ]
 
 
 userDecoder : Json.Decode.Decoder User
 userDecoder =
-  Json.Decode.at ["user"] (
+  Json.Decode.at ["data"] (
     Json.Decode.object3 User
       ("email" := Json.Decode.string)
       ("token" := Json.Decode.string)

@@ -10671,9 +10671,9 @@ Elm.TalentGrid.Auth.Model.make = function (_elm) {
                      ,{ctor: "_Tuple2",_0: "email",_1: fbAuth.email}
                      ,{ctor: "_Tuple2",_0: "facebookAccessToken",_1: fbAuth.facebookAccessToken}]);
    };
-   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/auth/facebook",authParams(fbAuth));};
+   var loginWithFacebookUrl = function (fbAuth) {    return A2($Http.url,"http://localhost:4000/session/",authParams(fbAuth));};
    var initialFacebookAuth = {id: "",name: "",email: "",timezone: 0,facebookAccessToken: ""};
-   var initialModel = {email: "",token: "",authenticated: false};
+   var initialUser = {email: "",token: "",authenticated: false};
    var FacebookAuth = F5(function (a,b,c,d,e) {    return {id: a,name: b,email: c,timezone: d,facebookAccessToken: e};});
    var User = F3(function (a,b,c) {    return {email: a,token: b,authenticated: c};});
    var userDecoder = A2($Json$Decode.at,
@@ -10686,7 +10686,7 @@ Elm.TalentGrid.Auth.Model.make = function (_elm) {
    return _elm.TalentGrid.Auth.Model.values = {_op: _op
                                               ,User: User
                                               ,FacebookAuth: FacebookAuth
-                                              ,initialModel: initialModel
+                                              ,initialUser: initialUser
                                               ,initialFacebookAuth: initialFacebookAuth
                                               ,loginWithFacebookUrl: loginWithFacebookUrl
                                               ,authParams: authParams
@@ -10727,7 +10727,7 @@ Elm.TalentGrid.Model.make = function (_elm) {
    $Signal = Elm.Signal.make(_elm),
    $TalentGrid$Auth$Model = Elm.TalentGrid.Auth.Model.make(_elm);
    var _op = {};
-   var initialModel = {user: $TalentGrid$Auth$Model.initialModel,facebookAuth: $TalentGrid$Auth$Model.initialFacebookAuth};
+   var initialModel = {user: $TalentGrid$Auth$Model.initialUser,facebookAuth: $TalentGrid$Auth$Model.initialFacebookAuth};
    var Model = F2(function (a,b) {    return {user: a,facebookAuth: b};});
    return _elm.TalentGrid.Model.values = {_op: _op,Model: Model,initialModel: initialModel};
 };Elm.TalentGrid = Elm.TalentGrid || {};
@@ -10759,12 +10759,13 @@ Elm.TalentGrid.Update.make = function (_elm) {
    var init = {ctor: "_Tuple2",_0: $TalentGrid$Model.initialModel,_1: $Effects.none};
    var initialLoadEffects = function (user) {    return user.authenticated ? $Effects.none : $Effects.none;};
    var update = F2(function (action,model) {
+      var a = A2($Debug.log,"update",action);
       var _p0 = action;
       if (_p0.ctor === "FacebookAuth") {
             var _p1 = _p0._0;
             return {ctor: "_Tuple2",_0: _U.update(model,{facebookAuth: _p1}),_1: loginWithFacebook(_p1)};
          } else {
-            var user = A2($Result.withDefault,$TalentGrid$Auth$Model.initialModel,_p0._0);
+            var user = A2($Result.withDefault,$TalentGrid$Auth$Model.initialUser,_p0._0);
             return {ctor: "_Tuple2",_0: _U.update(model,{user: user}),_1: initialLoadEffects(user)};
          }
    });
@@ -10806,6 +10807,7 @@ Elm.TalentGrid.make = function (_elm) {
    $Result = Elm.Result.make(_elm),
    $Signal = Elm.Signal.make(_elm),
    $StartApp = Elm.StartApp.make(_elm),
+   $TalentGrid$Action = Elm.TalentGrid.Action.make(_elm),
    $TalentGrid$Auth$Model = Elm.TalentGrid.Auth.Model.make(_elm),
    $TalentGrid$Model = Elm.TalentGrid.Model.make(_elm),
    $TalentGrid$Update = Elm.TalentGrid.Update.make(_elm),
@@ -10828,8 +10830,9 @@ Elm.TalentGrid.make = function (_elm) {
                                                                                                                                   v.facebookAccessToken)} : _U.badPort("an object with fields `id`, `name`, `email`, `timezone`, `facebookAccessToken`",
       v);
    });
-   var app = $StartApp.start({init: $TalentGrid$Update.init,update: $TalentGrid$Update.update,view: $TalentGrid$View.view,inputs: _U.list([])});
+   var loginAction = A2($Signal.map,$TalentGrid$Action.FacebookAuth,A2($Debug.log,"login",facebookLogin));
+   var app = $StartApp.start({init: $TalentGrid$Update.init,update: $TalentGrid$Update.update,view: $TalentGrid$View.view,inputs: _U.list([loginAction])});
    var main = app.html;
    var tasks = Elm.Native.Task.make(_elm).performSignal("tasks",app.tasks);
-   return _elm.TalentGrid.values = {_op: _op,app: app,main: main};
+   return _elm.TalentGrid.values = {_op: _op,app: app,main: main,loginAction: loginAction};
 };</script></head><body><script type="text/javascript">Elm.fullscreen(Elm.TalentGrid)</script></body></html>
