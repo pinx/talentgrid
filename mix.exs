@@ -25,7 +25,7 @@ defmodule Talentgrid.Mixfile do
       :phoenix_html,
       :ueberauth,
       :ueberauth_facebook,
-      # :facebook,
+      :facebook,
       :cowboy,
       :logger,
       :gettext]
@@ -44,6 +44,7 @@ defmodule Talentgrid.Mixfile do
      {:postgrex, ">= 0.0.0"},
      {:phoenix_ecto, "~> 2.0"},
      {:phoenix_html, "~> 2.4"},
+     {:phoenix_haml, github: "chrismccord/phoenix_haml"},
      {:ueberauth, "~> 0.2"},
      {:ueberauth_facebook, "~> 0.3"},
      {:facebook, "~> 0.8.0"},

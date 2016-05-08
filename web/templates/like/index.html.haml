@@ -1,0 +1,13 @@
+%h2 Listing likes
+%table.table
+  %thead
+    %tr
+      %th
+  %tbody
+    = for like <- @likes do
+      %tr
+        %td
+          = like.name
+        %td.text-right
+          = link("Show", to: Enum.join([Facebook.Config.graph_url, like.page_id], "/"), class: "btn btn-default btn-xs")
+    - end
