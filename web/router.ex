@@ -1,6 +1,8 @@
 defmodule Talentgrid.Router do
   use Talentgrid.Web, :router
 
+  require Ueberauth
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -27,4 +29,16 @@ defmodule Talentgrid.Router do
     resources "/sessions", SessionController, only: [:create, :delete]
     resources "/users", UserController, except: [:new, :edit]
   end
+
+
+  scope "/auth", Talentgrid do
+    pipe_through [:browser]
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    post "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
+  end
 end
+
+

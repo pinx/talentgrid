@@ -6,6 +6,8 @@ defmodule Talentgrid.Repo.Migrations.CreateUser do
       add :email, :string
       add :name, :string
       add :authentication_token, :string
+      add :facebook_uid, :string
+      add :avatar, :string
       add :facebook_token, :string
       add :current_sign_in_at, :datetime
       add :last_sign_in_at, :datetime
@@ -16,5 +18,6 @@ defmodule Talentgrid.Repo.Migrations.CreateUser do
     end
 
     create unique_index(:users, [:email])
+    create unique_index(:users, [:facebook_uid])
   end
 end
