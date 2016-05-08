@@ -3,8 +3,6 @@ defmodule Talentgrid.LikeController do
 
   alias Talentgrid.Like
 
-  plug :scrub_params, "like" when action in [:create, :update]
-  
   require Logger
 
   def index(conn, _params) do
@@ -13,15 +11,18 @@ defmodule Talentgrid.LikeController do
     {:json, %{"data" => likes}} = Facebook.myLikes(current_user.facebook_token)
     Logger.debug(inspect likes)
     refresh_db_likes(likes, current_user)
-    db_likes = Repo.all(from l in Like, where: l.user_id == ^current_user.id)
-    render(conn, "index.json", likes: db_likes)
+    user_id = current_user.id
+    db_likes = Repo.all(from l in Like, where: l.user_id == ^user_id)
+    render(conn, "index.html", likes: db_likes)
   end
 
-  defp get_db_likes(user) do
-    Repo.get_by(Like, user_id: user.id)
+  def show(conn, %{"id" => id}) do
+    like = Repo.get!(Like, id)
+    render(conn, "show.html", like: like)
   end
 
-  defp refresh_db_likes(likes, user) do
+
+ defp refresh_db_likes(likes, user) do
     for like <- likes do
       # like = like
       #   |> Map.put("page_id", like["id"])
@@ -44,5 +45,4 @@ defmodule Talentgrid.LikeController do
       end
     end
   end
-
 end

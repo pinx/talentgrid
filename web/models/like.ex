@@ -2,8 +2,8 @@ defmodule Talentgrid.Like do
   use Talentgrid.Web, :model
 
   schema "likes" do
-    field :user_id, :string
-    field :page_id, :string
+    field :user_id, :integer
+    field :page_id, :integer
     field :name, :string
     field :created_time, Ecto.DateTime
     field :text, :string
