@@ -10,6 +10,7 @@ defmodule Talentgrid.SessionController do
     user = get_or_create_user(%User{email: email, facebook_token: facebook_token})
     conn
     |> put_status(:created)
+    |> fetch_session
     |> put_session(:user, user)
     |> render("show.json", user: user)
   end

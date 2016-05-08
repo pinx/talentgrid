@@ -20,7 +20,7 @@ export var Auth = {
   },
 
   getInitialAuth() {
-    return { id: '', name: '', timezone: 0, email: '', facebookAccessToken: '' }
+    return { id: '', name: '', timezone: 0, email: '', facebook_token: '' }
   },
 
   setAuth(auth) {
@@ -52,7 +52,7 @@ export var Auth = {
   },
 
   handleFacebookResponse(fbResponse) {
-    fbResponse.facebookAccessToken = this.facebookAccessToken // Mutation, but fuck it, my main app is in Elm LOL!
+    fbResponse.facebook_token = this.facebook_token // Mutation, but fuck it, my main app is in Elm LOL!
     console.log(fbResponse);
     this.elmApp.ports.facebookLogin.send(fbResponse);
   },
@@ -60,7 +60,7 @@ export var Auth = {
   statusChangeCallback(response) {
     console.log(response);
     if (response.status === 'connected') {
-      this.facebookAccessToken = response.authResponse.accessToken // Another mutation and also fuck it - see above LOL!
+      this.facebook_token = response.authResponse.accessToken // Another mutation and also fuck it - see above LOL!
       FB.api('/me?fields=name,email,timezone', this.handleFacebookResponse.bind(this))
     } else if (response.status === 'not_authorized') {
       alert('Facebook login is not authorized')
