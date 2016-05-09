@@ -1,0 +1,6 @@
+<h2>New fb page</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: fb_page_path(@conn, :create) %>
+
+<%= link "Back", to: fb_page_path(@conn, :index) %>

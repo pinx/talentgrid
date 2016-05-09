@@ -21,6 +21,7 @@ defmodule Talentgrid.Router do
 
     get "/", PageController, :index
     resources "/likes", LikeController, except: [:new, :edit]
+    resources "/fb_pages", FbPageController
   end
 
   # Other scopes may use custom stacks.

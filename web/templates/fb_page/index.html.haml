@@ -1,0 +1,14 @@
+%h2 Listing fb pages
+%table.table
+  %thead
+    %tr
+      %th Text
+      %th
+  %tbody
+    = for fb_page <- @fb_pages do
+      %tr
+        %td= fb_page.text
+        %td.text-right
+          = link "Show", to: fb_page_path(@conn, :show, fb_page), class: "btn btn-default btn-xs"
+    - end
+= link "New fb pages", to: fb_page_path(@conn, :new)
