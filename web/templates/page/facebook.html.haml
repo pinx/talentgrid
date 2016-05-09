@@ -1,0 +1,13 @@
+- if @current_user do
+  %h2
+    Welcome, #{@current_user.name}!
+  %img.img-circle{src: "#{@current_user.avatar}"}
+  = link "Logout", to: auth_path(@conn, :delete), method: :delete, class: "btn btn-danger"
+  %br
+  %br
+  = link "My Likes", to: like_path(@conn, :index), class: "btn btn-success"
+  %br
+- else
+  %a.btn.btn-primary.btn-lg{:href => "/auth/facebook?scope=email,public_profile"}
+    %i.fa.fa-facebook
+    Sign in with Facebook

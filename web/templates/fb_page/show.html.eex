@@ -1,0 +1,13 @@
+<h2>Show fb page</h2>
+
+<ul>
+
+  <li>
+    <strong>Text:</strong>
+    <%= @fb_page.text %>
+  </li>
+
+</ul>
+
+<%= link "Edit", to: fb_page_path(@conn, :edit, @fb_page) %>
+<%= link "Back", to: fb_page_path(@conn, :index) %>

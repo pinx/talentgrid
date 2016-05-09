@@ -50,6 +50,7 @@ defmodule Talentgrid.Mixfile do
      {:facebook, "~> 0.8.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
+     {:faker, "~> 0.5", only: [:dev, :test]},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"}]
   end

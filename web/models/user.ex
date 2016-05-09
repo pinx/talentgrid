@@ -9,6 +9,7 @@ defmodule Talentgrid.User do
     field :authentication_token, :string
     field :avatar, :string
     field :facebook_token, :string
+    field :roles, :string
     field :current_sign_in_at, Ecto.DateTime
     field :last_sign_in_at, Ecto.DateTime
     field :current_sign_in_ip, :string
@@ -18,7 +19,7 @@ defmodule Talentgrid.User do
   end
 
   @required_fields ~w(name id )
-  @optional_fields ~w(facebook_token email avatar authentication_token )
+  @optional_fields ~w(email facebook_token avatar roles authentication_token )
 
   @doc """
   Creates a changeset based on the `model` and `params`.
