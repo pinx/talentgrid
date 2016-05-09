@@ -14,7 +14,14 @@ defmodule Talentgrid.LikeController do
   def index(conn, _params) do
     # likes = Repo.all(Like)
     current_user = get_session(conn, :current_user)
-    {:json, %{"data" => likes}} = Facebook.myLikes(current_user.facebook_token)
+    likes =
+      case Facebook.myLikes(current_user.facebook_token) do
+        {:json, %{"data" => data}} ->
+          data
+        {:error, error} -> 
+          Logger.warn(inspect error)
+          []
+      end
     Logger.debug(inspect likes)
     refresh_db_likes(likes, current_user)
     user_id = current_user.id
