@@ -20,6 +20,7 @@ defmodule Talentgrid.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/users", UserController
     resources "/likes", LikeController, except: [:new, :edit]
     resources "/fb_pages", FbPageController
     resources "/matches", MatchController, only: [:index]
@@ -30,7 +31,6 @@ defmodule Talentgrid.Router do
     pipe_through :api
 
     resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/users", UserController, except: [:new, :edit]
     resources "/likes", LikeController, except: [:new, :edit]
   end
 
