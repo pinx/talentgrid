@@ -1,0 +1,18 @@
+%h2
+  My Profile
+%h4
+  %img.img-circle{src: "#{@current_user.avatar}"}
+  = "#{@current_user.name}"
+%br
+Email: #{@current_user.email}
+%br
+Facebook ID: #{@current_user.id}
+%br
+%br
+= link "Back", to: page_path(@conn, :index), class: "btn btn-success"
+%br
+%hr
+%br
+If you want to leave us:
+= link "Delete all of my info", to: profile_path(@conn, :delete, @current_user), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"
+%br

@@ -7,6 +7,8 @@
   %br
   = link "My Likes", to: like_path(@conn, :index), class: "btn btn-success"
   %br
+  %br
+  = link "Profile", to: profile_path(@conn, :index), class: "btn btn-success"
 - else
   %a.btn.btn-primary.btn-lg{:href => "/auth/facebook?scope=email,public_profile"}
     %i.fa.fa-facebook

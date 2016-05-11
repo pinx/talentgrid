@@ -10,8 +10,7 @@ defmodule Talentgrid.Admin do
   end
 
   def call(conn, repo) do
-    user = get_session(conn, :user)
-    Logger.warn(inspect user)
+    user = get_session(conn, :current_user)
     if user && user.role == "admin" do
       Logger.warn("admin access")
       Logger.warn(inspect conn.remote_ip)

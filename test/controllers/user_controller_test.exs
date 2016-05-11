@@ -25,12 +25,12 @@ defmodule Talentgrid.UserControllerTest do
     conn = conn
       |> Plug.Session.call(@signing_opts)
       |> fetch_session()
-      |> put_session(:user, user)
+      |> put_session(:current_user, user)
     {:ok, conn: conn}
   end
 
   test "requires user authentication on all actions", %{conn: conn} do
-    conn = put_session(conn, :user, nil)
+    conn = put_session(conn, :current_user, nil)
     Enum.each([
       get(conn, user_path(conn, :new)),
       get(conn, user_path(conn, :index)),
@@ -50,7 +50,7 @@ defmodule Talentgrid.UserControllerTest do
   # test "lists all entries on index", %{conn: conn} do
   #   conn = set_user(conn)
   #   Logger.warn("=======================")
-  #   Logger.warn(inspect get_session(conn, :user))
+  #   Logger.warn(inspect get_session(conn, :current_user))
   #   conn = get conn, user_path(conn, :index)
   #   assert html_response(conn, 200) =~ "Listing users"
   # end
@@ -115,7 +115,7 @@ defmodule Talentgrid.UserControllerTest do
     conn
     |> Plug.Session.call(@signing_opts)
     |> fetch_session()
-    |> put_session(:user, user)
+    |> put_session(:current_user, user)
 
   end
 

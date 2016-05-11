@@ -26,12 +26,9 @@ defmodule Talentgrid.AuthController do
   end
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
-    Logger.warn(inspect auth)
     case UserFromAuth.find_or_create(auth) do
       {:ok, user} ->
-        Logger.warn(inspect user)
         user = get_or_create_user(user)
-        Logger.warn(inspect user)
         conn
         |> put_flash(:info, "Successfully authenticated.")
         |> put_session(:current_user, user)
