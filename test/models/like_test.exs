@@ -3,7 +3,7 @@ defmodule Talentgrid.LikeTest do
 
   alias Talentgrid.Like
 
-  @valid_attrs %{user_id: "some content", page_id: "some content"}
+  @valid_attrs %{user_id: 1234, page_id: 12345}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

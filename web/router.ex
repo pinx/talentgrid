@@ -13,16 +13,25 @@ defmodule Talentgrid.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
 
+  pipeline :admin do
+    plug Talentgrid.Admin, repo: Talentgrid.Repo
   end
 
   scope "/", Talentgrid do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
+    resources "/profile", ProfileController, only: [:index, :delete]
     resources "/likes", LikeController, except: [:new, :edit]
     resources "/fb_pages", FbPageController
     resources "/matches", MatchController, only: [:index]
+  end
+
+  scope "/", Talentgrid do
+    pipe_through [:browser, :admin]
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
@@ -30,7 +39,6 @@ defmodule Talentgrid.Router do
     pipe_through :api
 
     resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/users", UserController, except: [:new, :edit]
     resources "/likes", LikeController, except: [:new, :edit]
   end
 

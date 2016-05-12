@@ -5,8 +5,6 @@ defmodule UserFromAuth do
 
   alias Ueberauth.Auth
 
-  require Logger
-
   def find_or_create(%Auth{provider: :identity} = auth) do
     case validate_pass(auth.credentials) do
       :ok ->
@@ -21,7 +19,6 @@ defmodule UserFromAuth do
   end
 
   defp basic_info(auth) do
-    Logger.warn(inspect auth)
     %{
       id: auth.uid,
       email: auth.info.email,
