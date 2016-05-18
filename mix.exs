@@ -40,18 +40,20 @@ defmodule Talentgrid.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.4"},
+    [{:phoenix, "~> 1.2.0-rc"},
      {:postgrex, ">= 0.0.0"},
-     {:phoenix_ecto, "~> 2.0"},
-     {:phoenix_html, "~> 2.4"},
-     {:phoenix_haml, github: "chrismccord/phoenix_haml"},
+     {:phoenix_ecto, "~> 3.0.0-rc"},
+     {:phoenix_html, "~> 2.5"},
+     {:phoenix_haml, github: "pinx/phoenix_haml"},
      {:ueberauth, "~> 0.2"},
      {:ueberauth_facebook, "~> 0.3"},
      {:facebook, "~> 0.8.0"},
+     # {:ecto_export, path: "../ecto_export"},
+     # {:ecto_export, github: "xerions/ecto_export"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:faker, "~> 0.5", only: [:prod, :dev, :test]},
-     {:gettext, "~> 0.9"},
+     {:gettext, "~> 0.11"},
      {:cowboy, "~> 1.0"}]
   end
 

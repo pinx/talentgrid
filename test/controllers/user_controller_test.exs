@@ -21,6 +21,7 @@ defmodule Talentgrid.UserControllerTest do
   setup %{conn: conn} do
     # Plug.Session.init(@default_opts)
     Logger.warn(inspect conn)
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Talentgrid.Repo)
     user = Repo.insert!(%User{id: 1, name: "admin", roles: "admin", facebook_token: "<admin-token>"})
     conn = conn
       |> Plug.Session.call(@signing_opts)
