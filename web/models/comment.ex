@@ -2,10 +2,10 @@ defmodule Talentgrid.Comment do
   use Talentgrid.Web, :model
 
   schema "comments" do
+    field :subject, :string
     field :subject_id, :string
     field :author, :string
-
-    timestamps
+    field :created_utc, :integer
   end
 
   @doc """

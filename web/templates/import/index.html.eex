@@ -1,0 +1,21 @@
+<h2>Listing imports</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for import <- @imports do %>
+    <tr>
+
+      <td class="text-right">
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "Back", to: "/" %>

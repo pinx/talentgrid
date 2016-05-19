@@ -26,6 +26,7 @@ defmodule Talentgrid.Mixfile do
       :ueberauth,
       :ueberauth_facebook,
       :facebook,
+      :csv,
       :cowboy,
       :logger,
       :gettext]
@@ -48,6 +49,7 @@ defmodule Talentgrid.Mixfile do
      {:ueberauth, "~> 0.2"},
      {:ueberauth_facebook, "~> 0.3"},
      {:facebook, "~> 0.8.0"},
+     {:csv, "~> 1.4.0"},
      # {:ecto_export, path: "../ecto_export"},
      # {:ecto_export, github: "xerions/ecto_export"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},

@@ -27,6 +27,8 @@ defmodule Talentgrid.Router do
     resources "/likes", LikeController, except: [:new, :edit]
     resources "/fb_pages", FbPageController
     resources "/matches", MatchController, only: [:index]
+    resources "/comments", CommentController
+    resources "/import", ImportController, only: [:index, :create]
   end
 
   scope "/", Talentgrid do

@@ -3,10 +3,10 @@ defmodule Talentgrid.Repo.Migrations.CreateComment do
 
   def change do
     create table(:comments) do
+      add :subject, :string
       add :subject_id, :string
       add :author, :string
-
-      timestamps
+      add :created_utc, :integer
     end
 
   end
