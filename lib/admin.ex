@@ -1,7 +1,6 @@
 defmodule Talentgrid.Admin do
   import Plug.Conn
   require Logger
-  alias Talentgrid.Account
 
   @behaviour Plug
 
@@ -11,7 +10,7 @@ defmodule Talentgrid.Admin do
 
   def call(conn, repo) do
     user = get_session(conn, :current_user)
-    if user && user.role == "admin" do
+    if user && user.roles == "admin" do
       Logger.warn("admin access")
       Logger.warn(inspect conn.remote_ip)
       conn
