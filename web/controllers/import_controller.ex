@@ -1,7 +1,8 @@
 defmodule Talentgrid.ImportController do
   use Talentgrid.Web, :controller
 
-  alias Talentgrid.Comment
+  alias Talentgrid.Trace
+
   require Logger
 
   def index(conn, _params) do
@@ -17,7 +18,7 @@ defmodule Talentgrid.ImportController do
   def create(conn, %{"import_file" => import_file}) do
     File.stream!(import_file.path)
     |> CSV.decode(headers: false, strip_cells: true)  #(separator: ?;)
-    |> Enum.map(fn row -> import_comment(row) end)
+    |> Enum.map(fn row -> import_trace(row) end)
     # changeset = Import.changeset(%Import{}, import_params)
 
     # case Repo.insert(changeset) do
@@ -30,16 +31,20 @@ defmodule Talentgrid.ImportController do
     # end
   end
 
-  defp import_comment(line) do 
-    [subreddit_id, author, created_utc] = line
+  defp import_trace(line) do 
+    [author, subreddit_id, created_utc] = line
     case Integer.parse(created_utc) do
       {dt, _rem} -> 
-        comment = %Comment{
-          subject_id: subreddit_id,
-          author: author,
-          created_utc: dt
-        }
-        Repo.insert!(comment)
+        case Ecto.DateTime.cast(Convert.from_timestamp(dt)) do
+          {:ok, datetime} ->
+            %Trace{
+              user_name: author,
+              subject_id: subreddit_id,
+              created_at: datetime
+            }
+            |> Repo.insert!()
+          :error -> nil
+        end
       :error -> nil
     end
   end

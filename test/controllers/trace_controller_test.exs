@@ -1,10 +1,10 @@
-defmodule Talentgrid.LikeControllerTest do
+defmodule Talentgrid.TraceControllerTest do
   use Talentgrid.ConnCase
 
-  alias Talentgrid.Like
+  # alias Talentgrid.Trace
 
   test "lists all entries on index", %{conn: conn} do
-    conn = get conn, like_path(conn, :index)
+    conn = get conn, trace_path(conn, :index)
     assert html_response(conn, 200) =~ "Listing likes"
   end
 

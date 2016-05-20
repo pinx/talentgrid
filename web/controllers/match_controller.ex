@@ -1,17 +1,17 @@
 defmodule Talentgrid.MatchController do
   use Talentgrid.Web, :controller
 
-  alias Talentgrid.{User, Like}
+  alias Talentgrid.{User, Trace}
 
   def index(conn, _params) do
     current_user = get_session(conn, :current_user)
     user_id = current_user.id
-    nb_query = from l in Like,
+    nb_query = from l in Trace,
       where: l.user_id == ^user_id,
       select: count(l.id)
     nb_of_likes = Repo.one(nb_query)
-    employer_matches = from l in Like,
-      join: ol in Like, on: l.page_id == ol.page_id,
+    employer_matches = from l in Trace,
+      join: ol in Trace, on: l.subject_id == ol.subject_id,
       join: ou in User, on: ol.user_id == ou.id,
       where: ou.roles == "employer",
       where: l.user_id == ^user_id,

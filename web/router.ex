@@ -24,10 +24,9 @@ defmodule Talentgrid.Router do
 
     get "/", PageController, :index
     resources "/profile", ProfileController, only: [:index, :delete]
-    resources "/likes", LikeController, except: [:new, :edit]
+    resources "/traces", TraceController, except: [:new, :edit]
     resources "/fb_pages", FbPageController
     resources "/matches", MatchController, only: [:index]
-    resources "/comments", CommentController
     resources "/import", ImportController, only: [:index, :create]
   end
 
@@ -41,7 +40,6 @@ defmodule Talentgrid.Router do
     pipe_through :api
 
     resources "/sessions", SessionController, only: [:create, :delete]
-    resources "/likes", LikeController, except: [:new, :edit]
   end
 
 

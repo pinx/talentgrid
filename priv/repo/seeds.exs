@@ -10,7 +10,7 @@
 # We recommend using the bang functions (`insert!`, `update!`
 # and so on) as they will fail if something goes wrong.
 
-alias Talentgrid.{Repo, User, Like}
+alias Talentgrid.{Repo, User, Trace}
 
 Faker.start
 
@@ -50,27 +50,34 @@ for u <- [
   Repo.insert(u)
 end
 
-# Random likes for every user
-for u <- Repo.all(User) do
-  # Add some likes in a specific range
-  offset = Enum.random(1..900)
-  for i <- 1..100 do
-    like = %{
-      user_id: u.id,
-      page_id: offset + Enum.random(1..100),
-      name: Enum.join(Faker.Lorem.words(2), " ")
-    }
-    changeset = Like.changeset(%Like{}, like)
-    Repo.insert(changeset)
-  end
-  # Add random likes for the whole range
-  for i <- 1..100 do
-    like = %{
-      user_id: u.id,
-      page_id: Enum.random(1..1000),
-      name: Enum.join(Faker.Lorem.words(2), " ")
-    }
-    changeset = Like.changeset(%Like{}, like)
-    Repo.insert(changeset)
-  end
+case Mix.env do
+  :test -> nil
+  _ ->
+    # Random traces for every user
+    for u <- Repo.all(User) do
+      # Add some traces in a specific range
+      offset = Enum.random(1..900)
+      for i <- 1..100 do
+        trace = %{
+          user_id: u.id,
+          source: "facebook",
+          subject_id: to_string(offset + Enum.random(1..100)),
+          user_name: Enum.join(Faker.Lorem.words(2), " ")
+        }
+        changeset = Trace.changeset(%Trace{}, trace)
+        Repo.insert(changeset)
+      end
+      # Add random traces for the whole range
+      for i <- 1..100 do
+        trace = %{
+          user_id: u.id,
+          source: "facebook",
+          subject_id: to_string(Enum.random(1..1000)),
+          user_name: Enum.join(Faker.Lorem.words(2), " ")
+        }
+        changeset = Trace.changeset(%Trace{}, trace)
+        Repo.insert(changeset)
+      end
+    end
 end
+
