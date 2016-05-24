@@ -1,18 +1,18 @@
-defmodule Talentgrid.LikeController do
+defmodule Talentgrid.TraceController do
   use Talentgrid.Web, :controller
 
-  alias Talentgrid.Like
+  alias Talentgrid.Trace
 
   require Logger
 
-  # select other.user_id, count(*) from likes
-  # inner join likes as other
-  # on likes.page_id = other.page_id
-  # where likes.user_id = 100011990117480
+  # select other.user_id, count(*) from traces
+  # inner join traces as other
+  # on traces.page_id = other.page_id
+  # where traces.user_id = 100011990117480
   # group by other.user_id
 
   def index(conn, _params) do
-    # likes = Repo.all(Like)
+    # traces = Repo.all(Trace)
     current_user = get_session(conn, :current_user)
     likes =
       case Facebook.myLikes(current_user.facebook_token) do
@@ -23,19 +23,19 @@ defmodule Talentgrid.LikeController do
           []
       end
     Logger.debug(inspect likes)
-    refresh_db_likes(likes, current_user)
+    refresh_likes(likes, current_user)
     user_id = current_user.id
-    db_likes = Repo.all(from l in Like, where: l.user_id == ^user_id)
-    render(conn, "index.html", likes: db_likes)
+    db_traces = Repo.all(from l in Trace, where: l.user_id == ^user_id)
+    render(conn, "index.html", traces: db_traces)
   end
 
   def show(conn, %{"id" => id}) do
-    like = Repo.get!(Like, id)
-    render(conn, "show.html", like: like)
+    trace = Repo.get!(Trace, id)
+    render(conn, "show.html", trace: trace)
   end
 
 
- defp refresh_db_likes(likes, user) do
+ defp refresh_likes(likes, user) do
     for like <- likes do
       # like = like
       #   |> Map.put("page_id", like["id"])
@@ -45,14 +45,14 @@ defmodule Talentgrid.LikeController do
         :error -> nil
         dt -> dt
       end
-      new_like = %{
+      new_trace = %{
         user_id: user.id,
-        page_id: like["id"],
-        name: like["name"],
+        subject_id: like["id"],
+        user_name: like["name"],
         created_time: created_time
         }
-      Logger.debug(inspect new_like)
-      case Repo.insert(Like.changeset(%Like{}, new_like)) do
+      Logger.debug(inspect new_trace)
+      case Repo.insert(Trace.changeset(%Trace{}, new_trace)) do
         {:error, changeset} -> nil
         :ok -> nil
       end

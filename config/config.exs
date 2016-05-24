@@ -5,6 +5,9 @@
 # is restricted to this project.
 use Mix.Config
 
+config :talentgrid,
+  ecto_repos: [Talentgrid.Repo]
+
 # Configures the endpoint
 config :talentgrid, Talentgrid.Endpoint,
   url: [host: "localhost"],

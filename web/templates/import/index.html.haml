@@ -1,0 +1,22 @@
+%h2 Import traces
+.row
+  Number of rows in the 'traces' table:
+  = @count
+= link "Delete All", to: import_path(@conn, :delete, 1), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger"
+.row
+  &nbsp;
+.row
+  You can import Reddit files in csv and json format.
+  The required fields are:
+  %ul
+    %li author
+    %li subreddit_id
+    %li created_utc
+- form_for @conn, import_path(@conn, :create), [as: :import, multipart: true], fn f ->
+  .row.file-field.input-field
+    .btn
+      %input{type: "file", name: "import_file" class: "btn btn-large"}
+        Choose file
+  .row
+    = submit "Import", class: "btn btn-success btn-large"
+= link "Back", to: "/"

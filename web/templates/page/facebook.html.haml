@@ -5,7 +5,7 @@
   = link "Logout", to: auth_path(@conn, :delete), method: :delete, class: "btn btn-danger"
   %br
   %br
-  = link "My Likes", to: like_path(@conn, :index), class: "btn btn-success"
+  = link "My Likes", to: trace_path(@conn, :index), class: "btn btn-success"
   %br
   %br
   = link "Profile", to: profile_path(@conn, :index), class: "btn btn-success"

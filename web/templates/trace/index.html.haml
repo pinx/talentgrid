@@ -5,10 +5,10 @@
     %tr
       %th
   %tbody
-    = for like <- @likes do
+    = for trace <- @traces do
       %tr
         %td
-          = like.name
+          = trace.name
         %td.text-right
-          = link("Show", to: Enum.join([Facebook.Config.graph_url, like.page_id], "/"), class: "btn btn-default btn-xs")
+          = link("Show", to: Enum.join([Facebook.Config.graph_url, trace.subject_id], "/"), class: "btn btn-default btn-xs")
     - end

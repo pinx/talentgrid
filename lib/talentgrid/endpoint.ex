@@ -24,6 +24,7 @@ defmodule Talentgrid.Endpoint do
 
   plug Plug.Parsers,
     parsers: [:urlencoded, :multipart, :json],
+    length: 500_000_000,
     pass: ["*/*"],
     json_decoder: Poison
 
