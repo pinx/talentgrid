@@ -28,6 +28,7 @@ defmodule Talentgrid.Router do
     resources "/fb_pages", FbPageController
     resources "/matches", MatchController, only: [:index]
     resources "/import", ImportController, only: [:index, :create, :delete]
+    resources "/julia", JuliaController, only: [:index, :create]
   end
 
   scope "/", Talentgrid do

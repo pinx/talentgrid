@@ -1,0 +1,7 @@
+%h2 Julia result
+Result:
+= @result
+- if @error do
+  .alert.alert-danger
+    = @error
+= link "Back", to: julia_path(@conn, :index)

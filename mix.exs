@@ -27,6 +27,7 @@ defmodule Talentgrid.Mixfile do
       :ueberauth_facebook,
       :facebook,
       :csv,
+      :porcelain,
       :cowboy,
       :logger,
       :gettext]
@@ -50,8 +51,7 @@ defmodule Talentgrid.Mixfile do
      {:ueberauth_facebook, "~> 0.3"},
      {:facebook, "~> 0.8.0"},
      {:csv, "~> 1.4.0"},
-     # {:ecto_export, path: "../ecto_export"},
-     # {:ecto_export, github: "xerions/ecto_export"},
+     {:porcelain, "~> 2.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:faker, "~> 0.5", only: [:prod, :dev, :test]},

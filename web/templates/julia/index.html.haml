@@ -1,0 +1,13 @@
+%h2 Julia
+
+- form_for @conn, julia_path(@conn, :create, %{}), [as: :julia], fn f ->
+  %table{class: "table"}
+    %thead
+      %tr
+        %th
+          Write some Julia script, to test the connection to the Julia system.
+    %tbody
+      %tr
+        %td
+          = textarea f, :script, placeholder: "Julia script", value: "println(2+2)"
+          = submit "Execute"
