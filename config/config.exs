@@ -33,7 +33,7 @@ config :ueberauth, Ueberauth.Strategy.Facebook.OAuth,
   client_secret: System.get_env("FACEBOOK_CLIENT_SECRET")
 
 # suppress warning; install goon for advanced features of porcelain
-config :porcelain, :goon_warn_if_missing, false4
+config :porcelain, :goon_warn_if_missing, false
 
 # config :facebook, Facebook.Config,
 #   appsecret: System.get_env("FACEBOOK_CLIENT_SECRET")
