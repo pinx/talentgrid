@@ -1,5 +1,7 @@
 defmodule Talentgrid.Enum do
 
+  # http://stackoverflow.com/questions/35245859/how-to-use-postgres-enumerated-type-with-ecto
+
   alias Postgrex.TypeInfo
 
   defmacro defenum(module, name, values, opts \\ []) do

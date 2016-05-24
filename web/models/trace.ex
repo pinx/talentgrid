@@ -1,7 +1,7 @@
 defmodule Talentgrid.Trace do
   use Talentgrid.Web, :model
+  
   import Talentgrid.Enum
-
   defenum SourceEnum, "source_enum", ~w"facebook twitter google reddit"
 
   schema "traces" do
