@@ -1,7 +1,7 @@
 defmodule Talentgrid.MatchController do
   use Talentgrid.Web, :controller
 
-  alias Talentgrid.{User, Trace}
+  alias Talentgrid.{User, Trace, Match}
 
   def index(conn, _params) do
     current_user = get_session(conn, :current_user)
@@ -23,4 +23,18 @@ defmodule Talentgrid.MatchController do
     render(conn, "index.html", matches: employers)
   end
 
+  def create(conn, %{"match" => match_params}) do
+    changeset = Match.changeset(%Match{}, match_params)
+
+    case Repo.insert(changeset) do
+      {:ok, _match} ->
+        conn
+        |> put_flash(:info, "Match created successfully.")
+        |> redirect(to: match_path(conn, :index))
+      {:error, changeset} ->
+        conn
+        |> put_flash(:error, "Match not created.")
+        |> redirect(to: match_path(conn, :index))
+    end
+  end
 end

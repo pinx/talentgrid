@@ -26,7 +26,7 @@ defmodule Talentgrid.Router do
     resources "/profile", ProfileController, only: [:index, :delete]
     resources "/traces", TraceController, except: [:new, :edit]
     resources "/fb_pages", FbPageController
-    resources "/matches", MatchController, only: [:index]
+    resources "/matches", MatchController, only: [:index, :create]
     resources "/import", ImportController, only: [:index, :create, :delete]
     resources "/julia", JuliaController, only: [:index, :create]
   end
