@@ -37,8 +37,4 @@ defmodule Talentgrid.ErrorHelpers do
       Gettext.dgettext(Talentgrid.Gettext, "errors", msg, opts)
     end
   end
-
-  def translate_error(msg) do
-    Gettext.dgettext(Talentgrid.Gettext, "errors", msg)
-  end
 end
