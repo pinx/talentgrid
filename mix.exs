@@ -49,9 +49,10 @@ defmodule Talentgrid.Mixfile do
      {:phoenix_haml, github: "pinx/phoenix_haml"},
      {:ueberauth, "~> 0.2"},
      {:ueberauth_facebook, "~> 0.3"},
-     {:facebook, "~> 0.8.0"},
+     {:facebook, "~> 0.8"},
      {:csv, "~> 1.4.0"},
      {:porcelain, "~> 2.0"},
+     {:plogger, "~> 0.1"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:faker, "~> 0.5", only: [:prod, :dev, :test]},
@@ -66,7 +67,7 @@ defmodule Talentgrid.Mixfile do
   #
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
-    ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
+    ["ecto.setup": ["ecto.create", "ecto.migrate", "talentgrid.seed"],
      "ecto.reset": ["ecto.drop", "ecto.setup"],
      "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end

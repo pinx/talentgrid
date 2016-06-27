@@ -8,7 +8,7 @@
     = for trace <- @traces do
       %tr
         %td
-          = trace.name
+          = trace.text
         %td.text-right
           = link("Show", to: Enum.join([Facebook.Config.graph_url, trace.subject_id], "/"), class: "btn btn-default btn-xs")
     - end

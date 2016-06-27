@@ -3,26 +3,16 @@ defmodule Talentgrid.TraceController do
 
   alias Talentgrid.Trace
 
-  require Logger
-
-  # select other.user_id, count(*) from traces
-  # inner join traces as other
-  # on traces.page_id = other.page_id
-  # where traces.user_id = 100011990117480
-  # group by other.user_id
-
   def index(conn, _params) do
-    # traces = Repo.all(Trace)
     current_user = get_session(conn, :current_user)
     likes =
       case Facebook.myLikes(current_user.facebook_token) do
         {:json, %{"data" => data}} ->
           data
         {:error, error} -> 
-          Logger.warn(inspect error)
+          Plogger.debug(error, "Error")
           []
       end
-    Logger.debug(inspect likes)
     refresh_likes(likes, current_user)
     user_id = current_user.id
     db_traces = Repo.all(from l in Trace, where: l.user_id == ^user_id)
@@ -35,12 +25,8 @@ defmodule Talentgrid.TraceController do
   end
 
 
- defp refresh_likes(likes, user) do
+  defp refresh_likes(likes, user) do
     for like <- likes do
-      # like = like
-      #   |> Map.put("page_id", like["id"])
-      #   |> Map.put("facebook_uid", user.facebook_uid)
-      #   |> Map.delete("id")
       created_time = case Ecto.DateTime.cast(like["created_time"]) do
         :error -> nil
         dt -> dt
@@ -51,9 +37,9 @@ defmodule Talentgrid.TraceController do
         user_name: like["name"],
         created_time: created_time
         }
-      Logger.debug(inspect new_trace)
+        |> Plogger.debug("New trace")
       case Repo.insert(Trace.changeset(%Trace{}, new_trace)) do
-        {:error, changeset} -> nil
+        {:error, _changeset} -> nil  # ignore for now
         :ok -> nil
       end
     end
