@@ -16,7 +16,7 @@ defmodule Talentgrid.TraceController do
     refresh_likes(likes, current_user)
     user_id = current_user.id
     db_traces = Repo.all(from l in Trace, where: l.user_id == ^user_id)
-    render(conn, "index.html", traces: db_traces)
+    render(conn, "index.html", traces: db_traces, current_user: get_session(conn, :current_user))
   end
 
   def show(conn, %{"id" => id}) do

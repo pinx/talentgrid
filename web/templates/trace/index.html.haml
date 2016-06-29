@@ -1,14 +1,9 @@
-%h2 Listing likes
-= link("My Matches", to: match_path(@conn, :index), class: "btn btn-success")
-%table.table
-  %thead
-    %tr
-      %th
-  %tbody
-    = for trace <- @traces do
-      %tr
-        %td
+%main.mdl-layout__content
+  .mdl-grid
+    %header.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone
+      My likes
+  %ul.mdl-list
+    - for trace <- @traces do
+      %li.mdl-list__item
+        .mdl-list__item-primary-content
           = trace.text
-        %td.text-right
-          = link("Show", to: Enum.join([Facebook.Config.graph_url, trace.subject_id], "/"), class: "btn btn-default btn-xs")
-    - end
