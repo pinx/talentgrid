@@ -75,7 +75,9 @@ defmodule Mix.Tasks.Talentgrid.Seed do
       %User{id: 104238143325365, name: "Talent"},
       %User{id: 100012112842289, name: "Jennifer"},
       %User{id: 100012057344759, name: "Joe"},
-      %User{id: 100011990117480, name: "Patricia"}
+      %User{id: 100011990117480, name: "Patricia"},
+      %User{id: 10154097929868686, name: "Marcel van Pinxteren"},
+      %User{id: 279084319100892, name: "Edmond Tan"}
     ]
   end
   defp test_users(:dev) do
@@ -83,7 +85,8 @@ defmodule Mix.Tasks.Talentgrid.Seed do
       %User{id: 101037296980973, name: "Mary"},
       %User{id: 100012058126657, name: "Sharon"},
       %User{id: 100012048107346, name: "Dorothy"},
-      %User{id: 100012034007661, name: "Emily"}
+      %User{id: 100012034007661, name: "Emily"},
+      %User{id: 10154097929868686, name: "Marcel van Pinxteren"}
     ]
   end
   defp test_users(_env) do

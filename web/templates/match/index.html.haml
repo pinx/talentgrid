@@ -1,18 +1,13 @@
-%h2 Matching Employers
-%table.table
-  %thead
-    %tr
-      %th
-      %th
-      %th
-      %th
-  %tbody
+%main.mdl-layout__content
+  .mdl-grid
+    %header.mdl-cell.mdl-cell--3-col-desktop.mdl-cell--2-col-tablet.mdl-cell--4-col-phone
+      Matching Employers
+  %ul.mdl-list
     - for match <- @matches do
-      %tr
-        %td
-          %img{src: "#{match.avatar}" width: 32 height: 32}
-        %td
+      %li.mdl-list__item
+        .mdl-list__item-avatar
+          %img{src: "#{match.avatar}" width: 40 height: 40}
+        .mdl-list__item-primary-content
           = match.name
-        %td
+        .mdl-list__item-secondary-content
           = "#{match.pct} %"
-        %td.text-right

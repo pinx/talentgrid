@@ -20,7 +20,7 @@ defmodule Talentgrid.MatchController do
     employers = Repo.all(employer_matches)
       |> Enum.map( &(Map.put(&1, :pct, round(100 * &1.count / nb_of_likes))) )
       |> Enum.sort( &(&1.count > &2.count) )
-    render(conn, "index.html", matches: employers)
+    render(conn, "index.html", matches: employers, current_user: get_session(conn, :current_user))
   end
 
   def create(conn, %{"match" => match_params}) do
